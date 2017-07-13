@@ -31,6 +31,9 @@ namespace various
 
 		operator std::string() const;
 		std::string str() const;
+		
+		void clear();
+		
 	private:
 		std::ostringstream ss;
 	};

@@ -26,3 +26,9 @@ StringBuilder& StringBuilder::operator+=(const char* s) { return put(s); }
 
 StringBuilder::operator std::string() const { return ss.str(); }
 std::string StringBuilder::str() const { return ss.str(); }
+
+void StringBuilder::clear()
+{
+	ss.str("");
+	ss.clear();
+}

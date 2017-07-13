@@ -26,23 +26,20 @@ SmartIterator& SmartIterator::operator=(SmartIterator&& o)
 
 SmartIterator& SmartIterator::operator++()
 {
-	assert(good());
-	checkChar(c1);
-	if (hasPeek)
+	if (!hasPeek)
+		isValid = false;
+	else
 	{
-		c1 = c2;
+		checkChar(c1 = c2);
 		getPeek();
 	}
-	else
-		isValid = false;
 	return *this;
 }
 
 SmartIterator& SmartIterator::incTwo()
 {
-	assert(good() && peekGood());
-	checkChar(c1);
-	checkChar(c2);
+	if (hasPeek)
+		checkChar(c2);
 	readStart();
 	return *this;
 }
@@ -69,7 +66,7 @@ int SmartIterator::getCharCount() const { return charCount; }
 void SmartIterator::addLine()
 {
 	++line;
-	charCount = 1;
+	charCount = 0;
 }
 
 void SmartIterator::checkChar(char c)
@@ -84,7 +81,10 @@ void SmartIterator::readStart()
 {
 	c1 = in.get(); //in.good() refers to last get, so have to get first
 	if (in.good())
+	{
+		checkChar(c1);
 		getPeek();
+	}
 	else
 	{
 		isValid = false;

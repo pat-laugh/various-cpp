@@ -26,10 +26,9 @@ namespace various
 		SmartIterator& operator=(SmartIterator&& o);
 		SmartIterator& operator=(const SmartIterator& o) = delete;
 
-		//the iterator must be good
 		SmartIterator& operator++();
 
-		//the iterator and peek must be good
+		//optimized equivalent of calling ++ twice
 		SmartIterator& incTwo();
 
 		//the iterator must be good
@@ -58,9 +57,9 @@ namespace various
 		std::stringstream in;
 		char c1, c2;
 		bool isValid = true, hasPeek = true;
-		int line = 1, charCount = 1;
+		int line = 1, charCount = 0;
 
-		void addLine(); //increases line and resets charCount to 1
+		void addLine(); //increases line and resets charCount to 0
 		void checkChar(char c); //if c is '\n', addLine(), else increases charCount
 		
 		void readStart(); //safely reads the next two chars on the stream

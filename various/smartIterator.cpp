@@ -3,14 +3,30 @@
 #include "smartIterator.hpp"
 
 #include <cassert>
+#include <fstream>
 
 using namespace std;
 using namespace various;
 
+static bool bufEmpty(stringstream& in)
+{
+	return in.peek() == ifstream::traits_type::eof();
+}
+
 SmartIterator::SmartIterator(SmartIterator&& it) : in(move(it.in)), c1(it.c1), c2(it.c2), isValid(it.isValid), hasPeek(it.hasPeek), line(it.line), charCount(it.charCount) {}
 SmartIterator::SmartIterator(stringstream&& in) : in(move(in)) { readStart(); }
 SmartIterator::SmartIterator(string in) : in(move(in)) { readStart(); }
-SmartIterator::SmartIterator(std::streambuf* sb) { in << sb; readStart(); }
+SmartIterator::SmartIterator(std::streambuf* sb)
+{
+	in << sb;
+	if (!bufEmpty(in))
+		readStart();
+	else
+	{
+		isValid = false;
+		hasPeek = false;
+	}
+}
 
 SmartIterator& SmartIterator::operator=(SmartIterator&& o)
 {

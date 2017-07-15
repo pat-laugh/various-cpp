@@ -19,3 +19,6 @@ clean:
 
 debug: OPTIONS += -DNDEBUG -g3
 debug: all
+
+op: OPTIONS += -O3 -DNDEBUG
+op: all
